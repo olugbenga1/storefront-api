@@ -10,6 +10,7 @@ export type User = {
 const pepper = process.env.BCRYPT_PASSWORD;
 const saltrounds = <string>process.env.SALT_ROUNDS;
 
+// UserStore class for defining models
 export class UserStore {
   async index(): Promise<User[]> {
     try {
@@ -83,5 +84,27 @@ export class UserStore {
     } catch (error) {
       throw Error(`Cannot update password. ${error}`);
     }
+  }
+
+  async authenticate(
+    firstname: string,
+    lastname: string,
+    password: string
+  ): Promise<User | null> {
+    const sql =
+      "SELECT password_digest FROM users WHERE firstname = ($1), lastname = $(2)";
+    const conn = await client.connect();
+    const res = await conn.query(sql, [firstname, lastname]);
+    if (res.rows.length) {
+      const user = res.rows[0];
+      const correctPassword = await bcrypt.compare(
+        password + pepper,
+        user.password_digest
+      );
+      if (correctPassword) {
+        return user;
+      }
+    }
+    return null;
   }
 }
