@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import client from "../database";
 
 export type User = {
+  id?: string;
   firstname: string;
   lastname: string;
   password: string;
@@ -27,7 +28,7 @@ export class UserStore {
   async create(user: User): Promise<User> {
     try {
       const sql =
-        "INSERT INTO users (username, password_digest) VALUES ($1, $2) RETURNING *";
+        "INSERT INTO users (firstname, lastname, password_digest) VALUES ($1, $2, $3) RETURNING *";
       const conn = await client.connect();
 
       const hash = await bcrypt.hash(
@@ -91,20 +92,24 @@ export class UserStore {
     lastname: string,
     password: string
   ): Promise<User | null> {
-    const sql =
-      "SELECT password_digest FROM users WHERE firstname = ($1), lastname = $(2)";
-    const conn = await client.connect();
-    const res = await conn.query(sql, [firstname, lastname]);
-    if (res.rows.length) {
-      const user = res.rows[0];
-      const correctPassword = await bcrypt.compare(
-        password + pepper,
-        user.password_digest
-      );
-      if (correctPassword) {
-        return user;
+    try {
+      const sql =
+        "SELECT password_digest FROM users WHERE firstname = ($1) AND lastname = ($2)";
+      const conn = await client.connect();
+      const res = await conn.query(sql, [firstname, lastname]);
+      if (res.rows.length) {
+        const user = res.rows[0];
+        const correctPassword = await bcrypt.compare(
+          password + pepper,
+          user.password_digest
+        );
+        if (correctPassword) {
+          return user;
+        }
       }
+      return null;
+    } catch (error) {
+      throw new Error(`Unable to authenticate user ${error}`);
     }
-    return null;
   }
 }
