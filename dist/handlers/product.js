@@ -35,36 +35,58 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 exports.__esModule = true;
-var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-var user_1 = require("../models/user");
-var store = new user_1.UserStore();
-var tokenSecret = process.env.TOKEN_SECRET;
+var product_1 = require("../models/product");
+var store = new product_1.ProductStore();
 var index = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var users, error_1;
+    var products, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
                 return [4 /*yield*/, store.index()];
             case 1:
-                users = _a.sent();
-                res.json(users);
+                products = _a.sent();
+                res.json(products);
                 return [3 /*break*/, 3];
             case 2:
                 error_1 = _a.sent();
-                res.json(400);
-                res.send(error_1);
+                res.status(400);
+                res.json("Cannot fetch all users");
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); };
+var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var product, newProduct, error_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                product = {
+                    name: req.body.name,
+                    price: req.body.price,
+                    category: req.body.category
+                };
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, store.create(product)];
+            case 2:
+                newProduct = _a.sent();
+                res.json(newProduct);
+                return [3 /*break*/, 4];
+            case 3:
+                error_2 = _a.sent();
+                res.status(400);
+                res.json("Cannot create new product");
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
 var show = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var id, user, error_2;
+    var id, product, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -72,98 +94,43 @@ var show = function (req, res) { return __awaiter(void 0, void 0, void 0, functi
                 id = req.params.id;
                 return [4 /*yield*/, store.show(id)];
             case 1:
-                user = _a.sent();
-                res.json(user);
+                product = _a.sent();
+                res.json(product);
                 return [3 /*break*/, 3];
             case 2:
-                error_2 = _a.sent();
-                res.json(400);
-                res.send(error_2);
+                error_3 = _a.sent();
+                res.status(400);
+                res.json("Cannot show product of id ".concat(req.body.params));
                 return [3 /*break*/, 3];
             case 3: return [2 /*return*/];
         }
     });
 }); };
-var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, newUser, token, error_3;
+var remove = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var id, removedProduct, error_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                user = {
-                    firstname: req.body.firstname,
-                    lastname: req.body.lastname,
-                    password: req.body.password
-                };
-                _a.label = 1;
+                _a.trys.push([0, 2, , 3]);
+                id = req.params.id;
+                return [4 /*yield*/, store.remove(id)];
             case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, store.create(user)];
+                removedProduct = _a.sent();
+                res.json(removedProduct);
+                return [3 /*break*/, 3];
             case 2:
-                newUser = _a.sent();
-                token = jsonwebtoken_1["default"].sign({ user: newUser }, tokenSecret);
-                res.json(token);
-                return [3 /*break*/, 4];
-            case 3:
-                error_3 = _a.sent();
-                res.json(401);
-                res.send(error_3);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); };
-var authenticate = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, authenticatedUser, token, error_4;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                user = {
-                    firstname: req.body.firstname,
-                    lastname: req.body.lastname,
-                    password: req.body.password
-                };
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, store.authenticate(user.firstname, user.lastname, user.password)];
-            case 2:
-                authenticatedUser = _a.sent();
-                token = jsonwebtoken_1["default"].sign({ user: authenticatedUser }, tokenSecret);
-                res.json(token);
-                return [3 /*break*/, 4];
-            case 3:
                 error_4 = _a.sent();
-                res.status(401);
-                res.json("Cannot authenticate user");
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                res.status(400);
+                res.json("Cannot remove product");
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
-var verifyAuthToken = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var authorizationHeader, token, decoded;
-    return __generator(this, function (_a) {
-        try {
-            authorizationHeader = req.headers.authorization;
-            token = authorizationHeader === null || authorizationHeader === void 0 ? void 0 : authorizationHeader.split(" ")[1];
-            decoded = jsonwebtoken_1["default"].verify(token, tokenSecret);
-            if (!token) {
-                res.send("Invalid token");
-            }
-            next();
-        }
-        catch (error) {
-            console.log(error);
-            res.json(401);
-            res.json(error);
-        }
-        return [2 /*return*/];
-    });
-}); };
-var user_routes = function (app) {
-    app.get("/users", index);
-    app.get("/users/:id", show);
-    app.post("/users/signup", create);
-    app.post("/users/login", verifyAuthToken, authenticate);
+var product_routes = function (app) {
+    app.get("/products", index);
+    app.post("/product", create);
+    app.get("/products/:id", show);
+    app["delete"]("/products/:id", remove);
 };
-exports["default"] = user_routes;
+exports["default"] = product_routes;

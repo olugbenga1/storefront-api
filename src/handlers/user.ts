@@ -71,8 +71,6 @@ const verifyAuthToken = async (
     const authorizationHeader = req.headers.authorization;
     const token = <string>authorizationHeader?.split(" ")[1];
     const decoded = jwt.verify(token, tokenSecret);
-
-    console.log(decoded);
     if (!token) {
       res.send("Invalid token");
     }
