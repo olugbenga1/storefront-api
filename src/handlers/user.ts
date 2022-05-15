@@ -62,7 +62,7 @@ const authenticate = async (req: Request, res: Response) => {
   }
 };
 
-const verifyAuthToken = async (
+export const verifyAuthToken = async (
   req: Request,
   res: Response,
   next: express.NextFunction

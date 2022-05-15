@@ -39,6 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
+exports.verifyAuthToken = void 0;
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var user_1 = require("../models/user");
 var store = new user_1.UserStore();
@@ -160,10 +161,11 @@ var verifyAuthToken = function (req, res, next) { return __awaiter(void 0, void 
         return [2 /*return*/];
     });
 }); };
+exports.verifyAuthToken = verifyAuthToken;
 var user_routes = function (app) {
     app.get("/users", index);
     app.get("/users/:id", show);
     app.post("/users/signup", create);
-    app.post("/users/login", verifyAuthToken, authenticate);
+    app.post("/users/login", exports.verifyAuthToken, authenticate);
 };
 exports["default"] = user_routes;
