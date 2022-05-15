@@ -35,9 +35,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var product_1 = require("../models/product");
 var store = new product_1.ProductStore();
+var tokenSecret = process.env.TOKEN_SECRET;
 var index = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var products, error_1;
     return __generator(this, function (_a) {
@@ -59,7 +64,7 @@ var index = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
     });
 }); };
 var create = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var product, newProduct, error_2;
+    var product, authorizationHeader, token, newProduct, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -68,6 +73,16 @@ var create = function (req, res) { return __awaiter(void 0, void 0, void 0, func
                     price: req.body.price,
                     category: req.body.category
                 };
+                authorizationHeader = req.headers.authorization;
+                token = authorizationHeader === null || authorizationHeader === void 0 ? void 0 : authorizationHeader.split(" ")[1];
+                try {
+                    jsonwebtoken_1["default"].verify(token, tokenSecret);
+                }
+                catch (error) {
+                    res.status(401);
+                    res.json("Invalid token ".concat(error));
+                    return [2 /*return*/];
+                }
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
