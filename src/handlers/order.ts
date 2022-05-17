@@ -37,11 +37,11 @@ const create = async (req: Request, res: Response) => {
 };
 
 const addProducts = async (req: Request, res: Response) => {
-  const orderId = req.params.id;
-  const productId = req.body.productId;
+  const orderId = req.params.orderId;
   const quantity = req.body.quantity;
+  const productId = req.body.productId;
   try {
-    const addNewProduct = await store.addProducts(productId, orderId, quantity);
+    const addNewProduct = await store.addProducts(quantity, orderId, productId);
     res.json(addNewProduct);
   } catch (error) {
     res.status(400);

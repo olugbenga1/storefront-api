@@ -41,12 +41,12 @@ export class OrderStore {
   async create(order: Order): Promise<Order> {
     try {
       const conn = await client.connect();
-      const checkUser = "SELECT * FROM users WHERE id = $(1)";
+      const checkUser = "SELECT * FROM users WHERE id = ($1)";
       const checkedUser = await conn.query(checkUser, [order.userId]);
       if (checkedUser.rows.length < 1) "This user does not exist";
       const values = [order.status, order.userId];
       const sql =
-        "INSERT INTO orders (status, userId) VALUES ($1, $2) RETURNING *";
+        "INSERT INTO orders (order_status, userid) VALUES ($1, $2) RETURNING *";
       const res = await conn.query(sql, values);
       conn.release();
       return res.rows[0];
@@ -58,20 +58,12 @@ export class OrderStore {
   async addProducts(
     quantity: number,
     orderId: string,
-    productId: string
+    productId: number
   ): Promise<OrderProducts> {
     try {
       const conn = await client.connect();
-      const checkOrder = "SELECT * FROM orders WHERE id = ($1)";
-      const checkedOrder = await conn.query(checkOrder, [orderId]);
-      if (checkedOrder.rows.length < 1) "This order does not exist";
-
-      const checkProduct = "SELECT * FROM products WHERE id = ($1)";
-      const checkedProduct = await conn.query(checkProduct, [productId]);
-      if (checkedProduct.rows.length < 1) "This product does not exist";
-
       const sql =
-        "INSERT INTO order_products (quantity, orderId, productId) VALUES ($1, $2, $3) RETURNING *";
+        "INSERT INTO order_products (quantity, orderid, productid) VALUES ($1, $2, $3) RETURNING *";
       const res = await conn.query(sql, [quantity, orderId, productId]);
       conn.release();
       return res.rows[0];
