@@ -50,9 +50,9 @@ const addProducts = async (req: Request, res: Response) => {
 };
 
 const order_routes = (app: express.Application) => {
-  app.get("/orders", index);
+  app.get("/orders", verifyAuthToken, index);
   app.post("/orders", verifyAuthToken, create);
-  app.get("/orders/:id", show);
+  app.get("/orders/:id", verifyAuthToken, show);
   app.post("/orders/:orderId/products", verifyAuthToken, addProducts);
 };
 
