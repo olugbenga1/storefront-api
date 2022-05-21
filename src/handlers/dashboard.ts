@@ -8,8 +8,8 @@ const productsInOrders = async (req: Request, res: Response) => {
   res.json(products);
 };
 
-const dashboardRoutes = (app: express.Application) => {
+const dashboard_routes = (app: express.Application) => {
   app.get("/products_in_orders", productsInOrders);
 };
 
-export default dashboardRoutes;
+export default dashboard_routes;
