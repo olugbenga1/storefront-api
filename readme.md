@@ -25,3 +25,5 @@ This project was bootstrapped with the following tools:
 4. PostgreSQL
 5. jsonwebtoken
 6. Bcrypt
+
+All of these dependencies required are listed in the package.json file. Use
