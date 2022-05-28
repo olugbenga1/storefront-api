@@ -2,7 +2,7 @@
 
 An API that handles the backend logic and database integration of products available for purchase for an online store.
 
-# Features
+## Features
 
 The following features are covered for this product:
 
@@ -14,3 +14,14 @@ The following features are covered for this product:
 6. Authenticate users account to access protected routes.
 7. List all users.
 8. Allow authenticated users place an order on a product or group of products.
+
+## Dependencies
+
+This project was bootstrapped with the following tools:
+
+1. Typescript
+2. Node
+3. Express
+4. PostgreSQL
+5. jsonwebtoken
+6. Bcrypt
