@@ -29,3 +29,12 @@ This project was bootstrapped with the following tools:
 All of these dependencies required are listed in the package.json file. Use `npm install` on the command line. Environment variables are defined in a .env file.
 
 > However, you will need to install node and postgeSQL on your local machine.
+
+## Installation
+
+The following steps will provide a walkthrough on how to install the app on your local machine:
+
+1. Clone this repository `git clone https://github.com/olugbenga1/storefront-api.git`
+2. From the terminal, change directory to the storefront-api app folder `cd ~/downloads/storefront-api`
+3. Run `npm install` from your terminal in your project to install all dependencies.
+4. Run the app with the command `npm run watch`
