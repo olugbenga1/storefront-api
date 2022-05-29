@@ -26,4 +26,6 @@ This project was bootstrapped with the following tools:
 5. jsonwebtoken
 6. Bcrypt
 
-All of these dependencies required are listed in the package.json file. Use
+All of these dependencies required are listed in the package.json file. Use `npm install` on the command line. Environment variables are defined in a .env file.
+
+> However, you will need to install node and postgeSQL on your local machine.
