@@ -44,3 +44,12 @@ If you wish to contribute to this project, before any of the steps above, you wo
 ## Usage
 
 The endpoints available for interacting with the API can be found in the requirements.md file
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!
+
+## Authors
+
+Github: @olugbenga1
+Twitter: @gbengaoo
