@@ -53,8 +53,8 @@ Contributions, issues and feature requests are welcome!
 
 🥷🏾 Olugbenga
 
-Github: @olugbenga1
-Twitter: @gbengaoo
+- Github: @olugbenga1
+- Twitter: @gbengaoo
 
 ### Show your support
 
