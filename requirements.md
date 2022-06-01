@@ -27,3 +27,21 @@ To login to the store as an existing user. The following data is required to aut
 ### GET /users/:id
 
 Displays a user whose id matches the query. This is a protected route, only an authenticated user can view the details of another user.
+
+---
+
+## Products
+
+### POST/products
+
+To create new products. The following data is required to create a new product:
+
+    {
+        name: "",
+        price: "",
+        category: ""
+    }
+
+### GET/products/:id
+
+Displays a product whose id matches the query. This is a protected route, only an authenticated user can view the details of this product.
