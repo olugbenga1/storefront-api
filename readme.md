@@ -51,5 +51,11 @@ Contributions, issues and feature requests are welcome!
 
 ## Authors
 
+🥷🏾 Olugbenga
+
 Github: @olugbenga1
 Twitter: @gbengaoo
+
+### Show your support
+
+- Give a ⭐️ if you like this project
