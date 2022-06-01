@@ -4,7 +4,11 @@ POST /users
 
 To create new users. The following data is required to create a new user:
 
-`{ firstname: "", lastname: "", password: "" }`
+    {
+        firstname: "",
+        lastname: "",
+        password: ""
+    }
 
 Get /users
 
