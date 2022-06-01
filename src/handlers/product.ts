@@ -54,7 +54,7 @@ const remove = async (req: Request, res: Response) => {
 
 const product_routes = (app: express.Application) => {
   app.get("/products", index);
-  app.post("/product", verifyAuthToken, create);
+  app.post("/products", verifyAuthToken, create);
   app.get("/products/:id", show);
   app.delete("/products/:id", verifyAuthToken, remove);
 };
